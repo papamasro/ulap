@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="balloon"><path d="M32 3c13 0 23 8 23 21 0 14-10 24-23 34C19 48 9 38 9 24 9 11 19 3 32 3z"/></clipPath>
+  </defs>
+  <path d="M32 3c13 0 23 8 23 21 0 14-10 24-23 34C19 48 9 38 9 24 9 11 19 3 32 3z" fill="#582E87"/>
+  <g clip-path="url(#balloon)">
+    <path d="M0 11h64v8H0z" fill="#F4B942"/>
+    <path d="M0 29h64v9H0z" fill="#EF684A"/>
+    <path d="M0 48h64v9H0z" fill="#629BC0"/>
+  </g>
+  <rect x="26" y="57" width="12" height="6" rx="2" fill="#8B5A2B"/>
+</svg>
