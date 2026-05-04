@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UN LUGAR AParte - ULAP | Club Cultural</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración de Colores -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ulap-purple': '#582E87', 
+                        'ulap-orange': '#EF684A', 
+                        'ulap-yellow': '#F4B942', 
+                        'ulap-blue': '#629BC0',   
+                        'ulap-light': '#FDFBF7',  
+                        'ulap-dark': '#2D1B46'    
+                    },
+                    fontFamily: {
+                        'display': ['Montserrat', 'sans-serif'],
+                        'body': ['Nunito', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+      <style>
+        body { font-family: 'Nunito', sans-serif; background-color: #FDFBF7; }
+        h1, h2, h3, h4, .font-display { font-family: 'Montserrat', sans-serif; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* =========================================
+           LOGO GLOBO AEROSTÁTICO REDISEÑADO
+           ========================================= */
+        .ulap-globo-css {
+            position: relative;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            transform-origin: center;
+        }
+
+        .globo-body {
+            /* Proporciones más anchas arriba para parecer aerostático */
+            width: 100px;
+            height: 115px;
+            background: linear-gradient(
+                165deg, 
+                #F4B942 0%, #F4B942 15%,    
+                #582E87 15.1%, #582E87 45%, 
+                #EF684A 45.1%, #EF684A 70%, 
+                #582E87 70.1%, #582E87 88%, 
+                #629BC0 88.1%, #629BC0 100% 
+            );
+            /* Forma de pera invertida: ancho arriba, angosto abajo */
+            border-radius: 50% 50% 50% 50% / 45% 45% 55% 55%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: inset -6px -6px 15px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.1);
+            z-index: 2;
+            padding: 10px;
+        }
+
+        /* Texto dentro del globo */
+        .globo-text {
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            line-height: 0.9;
+            pointer-events: none;
+            text-transform: uppercase;
+        }
+
+        .globo-basket {
+            width: 22px;
+            height: 16px;
+            background-color: #8B5A2B;
+            border-radius: 3px 3px 6px 6px;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Cuerdas */
+        .globo-basket::before, .globo-basket::after {
+            content: '';
+            position: absolute;
+            top: -16px;
+            width: 2px;
+            height: 16px;
+            background-color: #666;
+        }
+        .globo-basket::before { left: 4px; transform: rotate(-12deg); }
+        .globo-basket::after { right: 4px; transform: rotate(12deg); }
+
+        /* Variantes de tamaño */
+        .globo-nav { transform: scale(0.45); margin-left: -20px; }
+        .globo-hero { transform: scale(1.8); }
+        .globo-bg-giant { transform: scale(4.5); opacity: 0.07; position: absolute; }
+
+        .flotar {
+            animation: flotar-anim 5s ease-in-out infinite alternate;
+        }
+        @keyframes flotar-anim {
+            0% { transform: translateY(0) rotate(-1deg); }
+            100% { transform: translateY(-15px) rotate(1deg); }
+        }
+    </style>
+</head>
+<body class="text-ulap-dark antialiased relative overflow-x-hidden">
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                
+                <div class="flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <!-- Logo CSS Integrado -->
+                    <div class="ulap-globo-css globo-sm mr-2">
+                        <div class="globo-body"></div>
+                        <div class="globo-basket"></div>
+                    </div>
+                    <!-- Textos -->
+                    <div class="font-display font-black leading-none tracking-tighter flex flex-col items-start pt-2">
+                        <span class="text-ulap-purple text-lg">UN LUGAR</span>
+                        <span class="text-ulap-purple text-2xl">APARTE</span>
+                        <span class="text-ulap-blue text-[0.65rem] tracking-[0.2em] font-normal mt-0.5">CLUB CULTURAL</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex space-x-8 items-center font-bold text-sm tracking-wide">
+                    <a href="#nosotros" class="text-ulap-purple hover:text-ulap-orange transition">Nosotros</a>
+                    <a href="#talleres" class="text-ulap-purple hover:text-ulap-orange transition">Talleres</a>
+                    <a href="#contacto" class="text-ulap-purple hover:text-ulap-orange transition">Contacto</a>
+                    <a href="https://www.instagram.com/unlugaraparte/" target="_blank" class="text-ulap-orange text-2xl hover:text-ulap-purple transition transform hover:scale-110">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-36 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center min-h-[85vh]">
+        
+        <!-- Globo decorativo gigante de fondo -->
+        <div class="ulap-globo-css globo-xl right-10 top-20 flotar" style="animation-duration: 8s;">
+            <div class="globo-body"></div>
+            <div class="globo-basket"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <div class="flex justify-center mb-6">
+                <div class="ulap-globo-css globo-lg flotar">
+                    <div class="globo-body"></div>
+                    <div class="globo-basket"></div>
+                </div>
+            </div>
+
+            <h1 class="font-display text-5xl md:text-7xl font-black text-ulap-purple mb-6 tracking-tight">
+                El arte en el <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-ulap-orange to-ulap-yellow">centro de todo.</span>
+            </h1>
+            <p class="mt-4 text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto font-light leading-relaxed">
+                Espacio cultural independiente y autogestivo en Villa Crespo. <br> Talleres artísticos para toda la comunidad.
+            </p>
+            <div class="mt-10 flex justify-center gap-4 flex-col sm:flex-row">
+                <a href="#talleres" class="bg-ulap-purple text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-ulap-dark transition transform hover:-translate-y-1 shadow-lg hover:shadow-ulap-purple/30">
+                    Ver Grilla de Talleres
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=541173694330&text=Hola!%20Quería%20saber%20más%20sobre%20el%20centro%20cultural." target="_blank" class="bg-white text-ulap-purple border-2 border-ulap-purple px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-50 transition transform hover:-translate-y-1">
+                    <i class="fab fa-whatsapp mr-2 text-green-500"></i> Consultas Generales
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Nosotros -->
+    <section id="nosotros" class="py-20 bg-ulap-purple text-white relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="font-display text-4xl font-black text-ulap-yellow mb-6">UN LUGAR AParte <br><span class="text-white text-2xl font-medium">ULAP•~</span></h2>
+                    <div class="w-16 h-2 bg-ulap-orange mb-6 rounded-full"></div>
+                    <p class="text-lg leading-relaxed mb-6 font-light">
+                        Somos un espacio cultural independiente y autogestivo. Creemos en el arte como motor de encuentro y transformación. Ofrecemos talleres artísticos y culturales para todas las edades y niveles.
+                    </p>
+                    <ul class="space-y-4 font-bold text-lg">
+                        <li class="flex items-center"><i class="fas fa-palette text-ulap-yellow w-8 text-center text-xl"></i> Talleres artísticos</li>
+                        <li class="flex items-center"><i class="fas fa-lightbulb text-ulap-yellow w-8 text-center text-xl"></i> Proyectos culturales</li>
+                        <li class="flex items-center"><i class="fas fa-microphone-lines text-ulap-yellow w-8 text-center text-xl"></i> Sala de ensayo y Teatro</li>
+                    </ul>
+                </div>
+                <div class="bg-white/10 p-10 rounded-3xl backdrop-blur-sm border border-white/20 relative shadow-2xl">
+                    <i class="fas fa-quote-left text-6xl text-ulap-orange/40 absolute top-6 left-6"></i>
+                    <h3 class="font-display text-3xl font-bold mt-10 mb-4 relative z-10 leading-tight">Más que un espacio, una comunidad.</h3>
+                    <p class="font-light text-white/90 text-xl relative z-10">Te invitamos a explorar, crear y conectar a través de nuestras diversas disciplinas. Acá, tenés tu lugar aparte.</p>
+                    
+                    <div class="absolute -bottom-6 -right-6 opacity-30">
+                        <div class="ulap-globo-css globo-lg flotar">
+                            <div class="globo-body"></div>
+                            <div class="globo-basket"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nueva Grilla de Talleres Enfocada en la Actividad -->
+    <section id="talleres" class="py-24 relative bg-gray-50/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <h2 class="font-display text-4xl font-black text-ulap-purple mb-4">Nuestros Talleres</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Encontrá la disciplina que más te guste, revisá los días disponibles y escribinos directamente para asegurar tu lugar.</p>
+            </div>
+
+            <!-- Filtros por Categoría (Mucho mejor UX) -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button onclick="filtrarTalleres('Todos')" class="filtro-btn activo px-6 py-2.5 rounded-full font-bold transition border-2 border-ulap-purple bg-ulap-purple text-white shadow-md">Todas las Actividades</button>
+                <button onclick="filtrarTalleres('Cuerpo y Movimiento')" class="filtro-btn px-6 py-2.5 rounded-full font-bold transition border-2 border-ulap-purple text-ulap-purple hover:bg-ulap-purple/10">Cuerpo y Movimiento</button>
+                <button onclick="filtrarTalleres('Arte y Creación')" class="filtro-btn px-6 py-2.5 rounded-full font-bold transition border-2 border-ulap-purple text-ulap-purple hover:bg-ulap-purple/10">Arte y Creación</button>
+                <button onclick="filtrarTalleres('Artes Escénicas')" class="filtro-btn px-6 py-2.5 rounded-full font-bold transition border-2 border-ulap-purple text-ulap-purple hover:bg-ulap-purple/10">Artes Escénicas</button>
+                <button onclick="filtrarTalleres('Infancias')" class="filtro-btn px-6 py-2.5 rounded-full font-bold transition border-2 border-ulap-purple text-ulap-purple hover:bg-ulap-purple/10">Infancias</button>
+            </div>
+
+            <!-- Contenedor de Tarjetas de Talleres -->
+            <div id="contenedor-talleres" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Se llena con JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto y Ubicación -->
+    <section id="contacto" class="py-24 bg-white border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Info -->
+                <div class="flex flex-col justify-center">
+                    <h2 class="font-display text-4xl font-black text-ulap-purple mb-6">Vení a conocernos</h2>
+                    <p class="text-gray-600 mb-10 text-xl leading-relaxed">Estamos en el corazón de Villa Crespo. Escribinos para reservar tu lugar o sumarte a nuestros proyectos.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-center p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-ulap-orange/10 rounded-full flex items-center justify-center text-ulap-orange text-2xl mr-6 flex-shrink-0">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ulap-dark text-lg">Dirección</h4>
+                                <p class="text-gray-600">Juan Ramírez de Velasco 710<br>Villa Crespo, C1414, CABA</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-ulap-blue/10 rounded-full flex items-center justify-center text-ulap-blue text-2xl mr-6 flex-shrink-0">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ulap-dark text-lg">WhatsApp</h4>
+                                <a href="https://api.whatsapp.com/send?phone=541173694330" target="_blank" class="text-ulap-blue font-bold text-lg hover:underline">11 7369-4330</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:shadow-md transition">
+                            <div class="w-14 h-14 bg-ulap-purple/10 rounded-full flex items-center justify-center text-ulap-purple text-2xl mr-6 flex-shrink-0">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-ulap-dark text-lg">Instagram</h4>
+                                <a href="https://www.instagram.com/unlugaraparte/" target="_blank" class="text-ulap-purple font-bold hover:underline block">@unlugaraparte</a>
+                                <a href="https://www.instagram.com/aparte.denoche/" target="_blank" class="text-gray-500 text-sm hover:text-ulap-purple transition mt-1 block"><i class="fas fa-moon text-xs mr-1"></i> Agenda Nocturna: @aparte.denoche</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapa -->
+                <div class="rounded-3xl overflow-hidden shadow-2xl border-8 border-gray-50 h-96 lg:h-[500px] relative group">
+                    <div class="absolute inset-0 bg-ulap-purple/10 pointer-events-none group-hover:opacity-0 transition-opacity z-10"></div>
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Juan+Ram%C3%ADrez+de+Velasco+710,+Buenos+Aires&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ulap-dark text-white py-12 relative overflow-hidden">
+        <div class="absolute top-10 left-10 opacity-20">
+            <div class="ulap-globo-css globo-lg">
+                <div class="globo-body"></div>
+                <div class="globo-basket"></div>
+            </div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-4 text-center relative z-10 flex flex-col items-center">
+            
+            <div class="ulap-globo-css globo-md mb-4">
+                <div class="globo-body"></div>
+                <div class="globo-basket"></div>
+            </div>
+
+            <div class="font-display font-black text-3xl mb-2 text-white tracking-widest">
+                UN LUGAR APARTE
+            </div>
+            <p class="text-gray-400 mb-8">Club Cultural Independiente</p>
+            
+            <div class="flex justify-center gap-6 mb-10">
+                <a href="https://www.instagram.com/unlugaraparte/" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-ulap-orange hover:-translate-y-1 transform transition-all text-xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=541173694330" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-500 hover:-translate-y-1 transform transition-all text-xl">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="https://maps.google.com/?q=Juan+Ramírez+de+Velasco+710,+Buenos+Aires" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-ulap-blue hover:-translate-y-1 transform transition-all text-xl">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </div>
+            <div class="w-full border-t border-white/10 pt-6">
+                <p class="text-gray-500 text-sm">© 2024 Un Lugar Aparte. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lógica de la Grilla de Talleres Agrupados -->
+    <script>
+        const numeroWhatsapp = "541173694330";
+
+        // Nueva Base de Datos: Agrupada por Taller en lugar de por Día.
+        const talleresAgrupados = [
+            // --- CUERPO Y MOVIMIENTO ---
+            { 
+                nombre: 'Yoga Integral', categoria: 'Cuerpo y Movimiento', icon: 'fa-om', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
+                horarios: [ { dia: 'Lunes', hora: '17:30 hs' }, { dia: 'Miércoles', hora: '17:30 hs' } ]
+            },
+            { 
+                nombre: 'Yoga Suave', categoria: 'Cuerpo y Movimiento', icon: 'fa-spa', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
+                horarios: [ { dia: 'Martes', hora: '17:00 hs' }, { dia: 'Jueves', hora: '17:00 hs' } ]
+            },
+            { 
+                nombre: 'Power Yoga', categoria: 'Cuerpo y Movimiento', icon: 'fa-fire', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange',
+                horarios: [ { dia: 'Lunes', hora: '19:00 hs' }, { dia: 'Jueves', hora: '19:00 hs' } ]
+            },
+            { 
+                nombre: 'Pilates Mat', categoria: 'Cuerpo y Movimiento', icon: 'fa-leaf', color: 'text-green-500', border: 'border-green-500', bg: 'bg-green-500',
+                horarios: [ { dia: 'Lunes', hora: '18:00 hs' }, { dia: 'Jueves', hora: '18:00 hs' } ]
+            },
+            { 
+                nombre: 'Movilidad Articular', categoria: 'Cuerpo y Movimiento', icon: 'fa-child', color: 'text-ulap-yellow', border: 'border-ulap-yellow', bg: 'bg-ulap-yellow',
+                horarios: [ { dia: 'Lunes', hora: '10:00 hs' } ]
+            },
+            { 
+                nombre: 'Tango', categoria: 'Cuerpo y Movimiento', icon: 'fa-shoe-prints', color: 'text-red-500', border: 'border-red-500', bg: 'bg-red-500',
+                horarios: [ { dia: 'Martes', hora: '20:00 hs' } ]
+            },
+            { 
+                nombre: 'Taekwondo', categoria: 'Cuerpo y Movimiento', icon: 'fa-hand-fist', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
+                horarios: [ { dia: 'Miércoles', hora: '19:00 hs' }, { dia: 'Viernes', hora: '19:00 hs' } ]
+            },
+
+            // --- ARTE Y CREACIÓN ---
+            { 
+                nombre: 'Clases de Pintura', categoria: 'Arte y Creación', icon: 'fa-palette', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange',
+                horarios: [ { dia: 'Lunes', hora: '16:00 hs' } ]
+            },
+            { 
+                nombre: 'Acuarela', categoria: 'Arte y Creación', icon: 'fa-paint-brush', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
+                horarios: [ { dia: 'Jueves', hora: '18:30 hs' }, { dia: 'Viernes', hora: '17:00 hs' } ]
+            },
+            { 
+                nombre: 'Cerámica Experimental', categoria: 'Arte y Creación', icon: 'fa-hands', color: 'text-amber-700', border: 'border-amber-700', bg: 'bg-amber-700',
+                horarios: [ { dia: 'Viernes', hora: '18:30 hs' }, { dia: 'Viernes', hora: '20:00 hs' } ]
+            },
+            { 
+                nombre: 'Curso de Fotografía', categoria: 'Arte y Creación', icon: 'fa-camera', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
+                horarios: [ { dia: 'Miércoles', hora: '18:30 hs' } ]
+            },
+            { 
+                nombre: 'Poesía', categoria: 'Arte y Creación', icon: 'fa-book-open', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
+                horarios: [ { dia: 'Sábado', hora: '18:00 hs' } ]
+            },
+
+            // --- ARTES ESCÉNICAS ---
+            { 
+                nombre: 'Teatro Principiantes', categoria: 'Artes Escénicas', icon: 'fa-masks-theater', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
+                horarios: [ { dia: 'Martes', hora: '18:00 hs' } ]
+            },
+            { 
+                nombre: 'Teatro Avanzados', categoria: 'Artes Escénicas', icon: 'fa-masks-theater', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
+                horarios: [ { dia: 'Miércoles', hora: '20:00 hs' } ]
+            },
+
+            // --- INFANCIAS ---
+            { 
+                nombre: 'Explorando Ando', categoria: 'Infancias', icon: 'fa-baby', color: 'text-ulap-yellow', border: 'border-ulap-yellow', bg: 'bg-ulap-yellow',
+                horarios: [ { dia: 'Miércoles', hora: '17:30 hs' } ]
+            },
+            { 
+                nombre: 'Juego y Circo', categoria: 'Infancias', icon: 'fa-bowling-ball', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange',
+                horarios: [ { dia: 'Viernes', hora: '17:30 hs' } ]
+            },
+            { 
+                nombre: 'Teatro Infantil', categoria: 'Infancias', icon: 'fa-masks-theater', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
+                horarios: [ { dia: 'Sábado', hora: '10:45 hs' }, { dia: 'Sábado', hora: '12:15 hs' } ]
+            },
+            { 
+                nombre: 'Arte Infantil', categoria: 'Infancias', icon: 'fa-palette', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
+                horarios: [ { dia: 'Sábado', hora: '14:30 hs' } ]
+            },
+
+            // --- OTROS ---
+            { 
+                nombre: 'Experiencia Mayor', categoria: 'Otros', icon: 'fa-users', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
+                horarios: [ { dia: 'Miércoles', hora: '16:00 hs' } ]
+            },
+            { 
+                nombre: 'Aparte de Noche (Eventos)', categoria: 'Otros', icon: 'fa-moon', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
+                horarios: [ { dia: 'Fechas', hora: 'A convenir' } ]
+            }
+        ];
+
+        function renderizarTarjetas(talleres) {
+            const contenedor = document.getElementById('contenedor-talleres');
+            contenedor.innerHTML = '';
+
+            if(talleres.length === 0) {
+                contenedor.innerHTML = `<p class="col-span-full text-center text-gray-500 py-10">No hay talleres en esta categoría.</p>`;
+                return;
+            }
+
+            talleres.forEach(taller => {
+                // Generar las "pills" (etiquetas) de horarios
+                let horariosHTML = taller.horarios.map(h => `
+                    <div class="flex items-center gap-2 bg-gray-50 border border-gray-100 rounded-lg p-2 text-sm">
+                        <i class="far fa-calendar-alt text-gray-400"></i>
+                        <span class="font-bold text-gray-700">${h.dia}</span>
+                        <span class="text-gray-500">| ${h.hora}</span>
+                    </div>
+                `).join('');
+
+                const mensajeRaw = `¡Hola ULAP! Quería info/inscribirme en el taller de *${taller.nombre}*.`;
+                const urlWhatsapp = `https://api.whatsapp.com/send?phone=${numeroWhatsapp}&text=${encodeURIComponent(mensajeRaw)}`;
+
+                const tarjetaHTML = `
+                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col h-full transform hover:-translate-y-1 group">
+                        
+                        <!-- Encabezado de la Tarjeta -->
+                        <div class="${taller.bg} p-6 text-white relative overflow-hidden">
+                            <!-- Icono gigante difuminado de fondo -->
+                            <i class="fas ${taller.icon} absolute -right-6 -bottom-6 text-9xl opacity-20 transform group-hover:scale-110 transition-transform duration-500"></i>
+                            
+                            <div class="relative z-10">
+                                <span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase backdrop-blur-sm shadow-sm inline-block mb-3">
+                                    ${taller.categoria}
+                                </span>
+                                <h3 class="font-display font-black text-2xl leading-tight">${taller.nombre}</h3>
+                            </div>
+                        </div>
+                        
+                        <!-- Cuerpo de la Tarjeta (Horarios) -->
+                        <div class="p-6 flex-grow flex flex-col bg-white relative z-10">
+                            <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Días y Horarios</h4>
+                            <div class="flex flex-col gap-2 mb-6">
+                                ${horariosHTML}
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <a href="${urlWhatsapp}" target="_blank" class="w-full flex items-center justify-center gap-2 border-2 ${taller.border} ${taller.color} hover:bg-gray-50 font-bold py-3 px-4 rounded-xl transition-colors duration-300">
+                                    <i class="fab fa-whatsapp text-xl"></i> Solicitar Info
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                contenedor.innerHTML += tarjetaHTML;
+            });
+        }
+
+        function filtrarTalleres(categoria) {
+            const botones = document.querySelectorAll('.filtro-btn');
+            botones.forEach(btn => {
+                if (btn.innerText === categoria || (categoria === 'Todos' && btn.innerText === 'Todas las Actividades')) {
+                    btn.classList.remove('text-ulap-purple', 'bg-transparent', 'hover:bg-ulap-purple/10');
+                    btn.classList.add('bg-ulap-purple', 'text-white');
+                } else {
+                    btn.classList.add('text-ulap-purple', 'bg-transparent', 'hover:bg-ulap-purple/10');
+                    btn.classList.remove('bg-ulap-purple', 'text-white');
+                }
+            });
+
+            if (categoria === 'Todos') {
+                renderizarTarjetas(talleresAgrupados);
+            } else {
+                const filtrados = talleresAgrupados.filter(t => t.categoria.includes(categoria));
+                renderizarTarjetas(filtrados);
+            }
+        }
+
+        window.onload = () => {
+            renderizarTarjetas(talleresAgrupados);
+        };
+    </script>
+</body>
+</html>
