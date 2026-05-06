@@ -92,9 +92,17 @@
             100% { transform: translateY(-15px) rotate(1deg); }
         }
 
-        /* Transiciones suaves para el modo oscuro */
+        /* Transiciones suaves y premium para el modo oscuro (Evitamos transform para no romper hover) */
         body, section, nav, div, h1, h2, h3, p, span, svg, path, rect, line, circle, text {
-            transition: all 0.4s ease;
+            transition-property: background-color, border-color, color, fill, stroke, filter;
+            transition-duration: 0.8s;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Excepción para animaciones específicas que necesitan ser rápidas (como el switch) */
+        #toggleCircle {
+            transition-property: transform, background-color;
+            transition-duration: 0.4s;
         }
 
         /* Brillo especial del globo en modo noche */
@@ -147,12 +155,12 @@
         </defs>
     </svg>
 
-    <!-- Navegación (Todos los links visibles en mobile) -->
+    <!-- Navegación -->
     <nav class="fixed w-full z-50 bg-white/95 dark:bg-ulap-night/95 backdrop-blur-md shadow-sm dark:shadow-slate-900/50 transition-all duration-300">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20 md:h-28 py-2">
                 
-                <!-- Logo (Cambia de color solo gracias a las variables CSS) -->
+                <!-- Logo -->
                 <div class="flex items-center cursor-pointer hover:opacity-90 transition globo-glow" onclick="window.scrollTo(0,0)">
                     <div class="w-[45px] h-[60px] sm:w-[55px] sm:h-[73px] md:w-[70px] md:h-[93px] flex-shrink-0 transition-all drop-shadow-sm">
                         <svg viewBox="0 0 100 135" class="w-full h-full"><use href="#globo-ulap-master"></use></svg>
@@ -160,7 +168,6 @@
                 </div>
 
                 <!-- Links y Switch -->
-                <!-- Ajusté el tamaño de fuente base a text-[11px] para que entren todos en celulares pequeños -->
                 <div class="flex space-x-3 sm:space-x-6 md:space-x-8 items-center font-bold text-[11px] sm:text-sm md:text-base tracking-wide">
                     <a href="#nosotros" class="text-ulap-purple dark:text-ulap-yellow hover:text-ulap-orange transition">Nosotros</a>
                     <a href="#talleres" class="text-ulap-purple dark:text-ulap-yellow hover:text-ulap-orange transition block dark:hidden">Talleres</a>
@@ -168,12 +175,12 @@
                     <a href="#contacto" class="text-ulap-purple dark:text-ulap-yellow hover:text-ulap-orange transition">Contacto</a>
                     
                     <!-- Switch Día/Noche -->
-                    <button onclick="toggleTheme()" id="themeToggle" class="relative flex items-center bg-gray-100 dark:bg-slate-800 rounded-full p-1 w-14 h-8 sm:w-16 sm:h-9 transition-colors shadow-inner border border-gray-200 dark:border-slate-700 focus:outline-none ml-2">
+                    <button onclick="toggleTheme()" id="themeToggle" class="relative flex items-center bg-gray-100 dark:bg-slate-800 rounded-full p-1 w-14 h-8 sm:w-16 sm:h-9 shadow-inner border border-gray-200 dark:border-slate-700 focus:outline-none ml-2">
                         <div class="absolute inset-y-0 left-0 w-full h-full flex justify-between items-center px-2 text-xs">
                             <i class="fas fa-sun text-yellow-500"></i>
                             <i class="fas fa-moon text-blue-300"></i>
                         </div>
-                        <div id="toggleCircle" class="w-6 h-6 sm:w-7 sm:h-7 bg-white dark:bg-ulap-purple rounded-full shadow-md transform transition-transform duration-300 translate-x-0 dark:translate-x-6 sm:dark:translate-x-7 z-10 flex items-center justify-center">
+                        <div id="toggleCircle" class="w-6 h-6 sm:w-7 sm:h-7 bg-white dark:bg-ulap-purple rounded-full shadow-md transform translate-x-0 dark:translate-x-6 sm:dark:translate-x-7 z-10 flex items-center justify-center">
                         </div>
                     </button>
 
@@ -205,7 +212,7 @@
             </p>
             <div class="mt-10 flex justify-center gap-4 flex-col sm:flex-row">
                 <a href="#talleres" class="bg-ulap-purple text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-ulap-dark transition transform hover:-translate-y-1 shadow-lg hover:shadow-ulap-purple/30">
-                    Ver Grilla de Talleres
+                    Ver Calendario de Talleres
                 </a>
             </div>
         </div>
@@ -213,14 +220,18 @@
 
     <!-- HERO NOCHE -->
     <section id="hero-noche" class="relative pt-36 pb-20 lg:pt-48 lg:pb-32 overflow-hidden items-center min-h-[85vh] hidden dark:flex">
+        <!-- Globo de fondo transparente -->
+        <div class="absolute right-10 top-20 w-48 h-64 md:w-72 md:h-96 opacity-10 flotar pointer-events-none" style="animation-duration: 8s;">
+            <svg viewBox="0 0 100 135" class="w-full h-full"><use href="#globo-ulap-master"></use></svg>
+        </div>
+        
         <!-- Luces de neón de fondo más sutiles para que destaque el logo blanco -->
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-ulap-purple rounded-full blur-[150px] opacity-20 pointer-events-none"></div>
         <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600 rounded-full blur-[150px] opacity-15 pointer-events-none"></div>
         
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             <div class="flex justify-center mb-6">
-                <!-- El logo acá se verá blanco automáticamente por las variables CSS -->
-                <div class="w-36 h-48 md:w-48 md:h-64 flotarDrop-shadow-2xl globo-glow">
+                <div class="w-36 h-48 md:w-48 md:h-64 flotar drop-shadow-2xl globo-glow">
                     <svg viewBox="0 0 100 135" class="w-full h-full"><use href="#globo-ulap-master"></use></svg>
                 </div>
             </div>
@@ -240,7 +251,7 @@
     </section>
 
     <!-- Sobre Nosotros -->
-    <section id="nosotros" class="py-20 bg-ulap-purple dark:bg-slate-900/50 text-white relative overflow-hidden transition-colors duration-500">
+    <section id="nosotros" class="py-20 bg-ulap-purple dark:bg-slate-900/50 text-white relative overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -259,14 +270,16 @@
         </div>
     </section>
 
-    <!-- SECCIÓN TALLERES (DÍA) -->
+    <!-- SECCIÓN TALLERES (DÍA) - VISTA CALENDARIO -->
     <section id="talleres" class="py-24 relative bg-gray-50/50 dark:hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14">
-                <h2 class="font-display text-4xl font-black text-ulap-purple mb-4">Nuestros Talleres</h2>
-                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Encontrá la disciplina que más te guste y escribinos directamente para asegurar tu lugar.</p>
+                <h2 class="font-display text-4xl font-black text-ulap-purple mb-4">Calendario Semanal</h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">Pasá el mouse por encima (o tocá) tu actividad favorita para ver detalles y solicitar información.</p>
             </div>
-            <div id="contenedor-talleres" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- El contenedor será poblado por JS con una grilla de columnas por día -->
+            <div id="contenedor-talleres">
                 <!-- Se llena con JS -->
             </div>
         </div>
@@ -289,7 +302,7 @@
             </div>
 
             <div id="contenedor-eventos-noche" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-14">
-                <!-- Se llena con JS (Incluye la nueva de Poesía) -->
+                <!-- Se llena con JS -->
             </div>
         </div>
     </section>
@@ -312,7 +325,7 @@
     </section>
 
     <!-- Contacto -->
-    <section id="contacto" class="py-24 bg-white dark:bg-ulap-night border-t border-gray-100 dark:border-white/5 transition-colors duration-500">
+    <section id="contacto" class="py-24 bg-white dark:bg-ulap-night border-t border-gray-100 dark:border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="flex flex-col justify-center">
@@ -351,7 +364,8 @@
                         height="100%" 
                         style="border:0;" 
                         allowfullscreen="" 
-                        loading="lazy">
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
             </div>
@@ -359,7 +373,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-ulap-dark dark:bg-[#0a0612] text-white py-12 relative overflow-hidden transition-colors duration-500">
+    <footer class="bg-ulap-dark dark:bg-[#0a0612] text-white py-12 relative overflow-hidden">
         <div class="absolute top-10 left-10 w-48 h-64 opacity-10 pointer-events-none">
             <svg viewBox="0 0 100 135" class="w-full h-full"><use href="#globo-ulap-master"></use></svg>
         </div>
@@ -425,7 +439,6 @@
         }
 
         // INICIO: POR DEFECTO DÍA (LIGHT)
-        // Solo se activa el modo oscuro si el usuario explícitamente lo guardó antes.
         if (localStorage.theme === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
@@ -434,127 +447,121 @@
 
 
         // ==========================================
-        // BASE DE DATOS: TALLERES (DÍA) - EJEMPLO CORTO
-        // (Podés pegar acá tu lista completa de 20 talleres)
+        // BASE DE DATOS: TALLERES (DÍA)
         // ==========================================
         const talleresAgrupados = [
             // --- CUERPO Y MOVIMIENTO ---
-            { 
-                nombre: 'Yoga Integral', categoria: 'Cuerpo y Movimiento', icon: 'fa-om', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
-                horarios: [ { dia: 'Lunes', hora: '17:30 hs' }, { dia: 'Miércoles', hora: '17:30 hs' } ]
-            },
-            { 
-                nombre: 'Yoga Suave', categoria: 'Cuerpo y Movimiento', icon: 'fa-spa', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
-                horarios: [ { dia: 'Martes', hora: '17:00 hs' }, { dia: 'Jueves', hora: '17:00 hs' } ]
-            },
-            { 
-                nombre: 'Power Yoga', categoria: 'Cuerpo y Movimiento', icon: 'fa-fire', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange',
-                horarios: [ { dia: 'Lunes', hora: '19:00 hs' }, { dia: 'Jueves', hora: '19:00 hs' } ]
-            },
-            { 
-                nombre: 'Pilates Mat', categoria: 'Cuerpo y Movimiento', icon: 'fa-leaf', color: 'text-green-500', border: 'border-green-500', bg: 'bg-green-500',
-                horarios: [ { dia: 'Lunes', hora: '18:00 hs' }, { dia: 'Jueves', hora: '18:00 hs' } ]
-            },
-            { 
-                nombre: 'Movilidad Articular', categoria: 'Cuerpo y Movimiento', icon: 'fa-child', color: 'text-ulap-yellow', border: 'border-ulap-yellow', bg: 'bg-ulap-yellow',
-                horarios: [ { dia: 'Lunes', hora: '10:00 hs' } ]
-            },
-            { 
-                nombre: 'Tango', categoria: 'Cuerpo y Movimiento', icon: 'fa-shoe-prints', color: 'text-red-500', border: 'border-red-500', bg: 'bg-red-500',
-                horarios: [ { dia: 'Martes', hora: '20:00 hs' } ]
-            },
-            { 
-                nombre: 'Taekwondo', categoria: 'Cuerpo y Movimiento', icon: 'fa-hand-fist', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
-                horarios: [ { dia: 'Miércoles', hora: '19:00 hs' }, { dia: 'Viernes', hora: '19:00 hs' } ]
-            },
+            { nombre: 'Yoga Integral', categoria: 'Cuerpo y Movimiento', icon: 'fa-om', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple', horarios: [ { dia: 'Lunes', hora: '17:30 hs' }, { dia: 'Miércoles', hora: '17:30 hs' } ] },
+            { nombre: 'Yoga Suave', categoria: 'Cuerpo y Movimiento', icon: 'fa-spa', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue', horarios: [ { dia: 'Martes', hora: '17:00 hs' }, { dia: 'Jueves', hora: '17:00 hs' } ] },
+            { nombre: 'Power Yoga', categoria: 'Cuerpo y Movimiento', icon: 'fa-fire', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange', horarios: [ { dia: 'Lunes', hora: '19:00 hs' }, { dia: 'Jueves', hora: '19:00 hs' } ] },
+            { nombre: 'Pilates Mat', categoria: 'Cuerpo y Movimiento', icon: 'fa-leaf', color: 'text-green-500', border: 'border-green-500', bg: 'bg-green-500', horarios: [ { dia: 'Lunes', hora: '18:00 hs' }, { dia: 'Jueves', hora: '18:00 hs' } ] },
+            { nombre: 'Movilidad Articular', categoria: 'Cuerpo y Movimiento', icon: 'fa-child', color: 'text-ulap-yellow', border: 'border-ulap-yellow', bg: 'bg-ulap-yellow', horarios: [ { dia: 'Lunes', hora: '10:00 hs' } ] },
+            { nombre: 'Tango', categoria: 'Cuerpo y Movimiento', icon: 'fa-shoe-prints', color: 'text-red-500', border: 'border-red-500', bg: 'bg-red-500', horarios: [ { dia: 'Martes', hora: '20:00 hs' } ] },
+            { nombre: 'Taekwondo', categoria: 'Cuerpo y Movimiento', icon: 'fa-hand-fist', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark', horarios: [ { dia: 'Miércoles', hora: '19:00 hs' }, { dia: 'Viernes', hora: '19:00 hs' } ] },
 
             // --- ARTE Y CREACIÓN ---
-            { 
-                nombre: 'Clases de Pintura', categoria: 'Arte y Creación', icon: 'fa-palette', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange',
-                horarios: [ { dia: 'Lunes', hora: '16:00 hs' } ]
-            },
-            { 
-                nombre: 'Acuarela', categoria: 'Arte y Creación', icon: 'fa-paint-brush', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
-                horarios: [ { dia: 'Jueves', hora: '18:30 hs' }, { dia: 'Viernes', hora: '17:00 hs' } ]
-            },
-            { 
-                nombre: 'Cerámica Experimental', categoria: 'Arte y Creación', icon: 'fa-hands', color: 'text-amber-700', border: 'border-amber-700', bg: 'bg-amber-700',
-                horarios: [ { dia: 'Viernes', hora: '18:30 hs' }, { dia: 'Viernes', hora: '20:00 hs' } ]
-            },
-            { 
-                nombre: 'Curso de Fotografía', categoria: 'Arte y Creación', icon: 'fa-camera', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
-                horarios: [ { dia: 'Miércoles', hora: '18:30 hs' } ]
-            },
-            { 
-                nombre: 'Poesía', categoria: 'Arte y Creación', icon: 'fa-book-open', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
-                horarios: [ { dia: 'Sábado', hora: '18:00 hs' } ]
-            },
+            { nombre: 'Clases de Pintura', categoria: 'Arte y Creación', icon: 'fa-palette', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange', horarios: [ { dia: 'Lunes', hora: '16:00 hs' } ] },
+            { nombre: 'Acuarela', categoria: 'Arte y Creación', icon: 'fa-paint-brush', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue', horarios: [ { dia: 'Jueves', hora: '18:30 hs' }, { dia: 'Viernes', hora: '17:00 hs' } ] },
+            { nombre: 'Cerámica Experimental', categoria: 'Arte y Creación', icon: 'fa-hands', color: 'text-amber-700', border: 'border-amber-700', bg: 'bg-amber-700', horarios: [ { dia: 'Viernes', hora: '18:30 hs' }, { dia: 'Viernes', hora: '20:00 hs' } ] },
+            { nombre: 'Curso de Fotografía', categoria: 'Arte y Creación', icon: 'fa-camera', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple', horarios: [ { dia: 'Miércoles', hora: '18:30 hs' } ] },
+            { nombre: 'Poesía', categoria: 'Arte y Creación', icon: 'fa-book-open', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark', horarios: [ { dia: 'Sábado', hora: '18:00 hs' } ] },
 
             // --- ARTES ESCÉNICAS ---
-            { 
-                nombre: 'Teatro Principiantes', categoria: 'Artes Escénicas', icon: 'fa-masks-theater', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
-                horarios: [ { dia: 'Martes', hora: '18:00 hs' } ]
-            },
-            { 
-                nombre: 'Teatro Avanzados', categoria: 'Artes Escénicas', icon: 'fa-masks-theater', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark',
-                horarios: [ { dia: 'Miércoles', hora: '20:00 hs' } ]
-            },
+            { nombre: 'Teatro Principiantes', categoria: 'Artes Escénicas', icon: 'fa-masks-theater', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple', horarios: [ { dia: 'Martes', hora: '18:00 hs' } ] },
+            { nombre: 'Teatro Avanzados', categoria: 'Artes Escénicas', icon: 'fa-masks-theater', color: 'text-ulap-dark', border: 'border-ulap-dark', bg: 'bg-ulap-dark', horarios: [ { dia: 'Miércoles', hora: '20:00 hs' } ] },
 
             // --- INFANCIAS ---
-            { 
-                nombre: 'Explorando Ando', categoria: 'Infancias', icon: 'fa-baby', color: 'text-ulap-yellow', border: 'border-ulap-yellow', bg: 'bg-ulap-yellow',
-                horarios: [ { dia: 'Miércoles', hora: '17:30 hs' } ]
-            },
-            { 
-                nombre: 'Juego y Circo', categoria: 'Infancias', icon: 'fa-bowling-ball', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange',
-                horarios: [ { dia: 'Viernes', hora: '17:30 hs' } ]
-            },
-            { 
-                nombre: 'Teatro Infantil', categoria: 'Infancias', icon: 'fa-masks-theater', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
-                horarios: [ { dia: 'Sábado', hora: '10:45 hs' }, { dia: 'Sábado', hora: '12:15 hs' } ]
-            },
-            { 
-                nombre: 'Arte Infantil', categoria: 'Infancias', icon: 'fa-palette', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple',
-                horarios: [ { dia: 'Sábado', hora: '14:30 hs' } ]
-            },
+            { nombre: 'Explorando Ando', categoria: 'Infancias', icon: 'fa-baby', color: 'text-ulap-yellow', border: 'border-ulap-yellow', bg: 'bg-ulap-yellow', horarios: [ { dia: 'Miércoles', hora: '17:30 hs' } ] },
+            { nombre: 'Juego y Circo', categoria: 'Infancias', icon: 'fa-bowling-ball', color: 'text-ulap-orange', border: 'border-ulap-orange', bg: 'bg-ulap-orange', horarios: [ { dia: 'Viernes', hora: '17:30 hs' } ] },
+            { nombre: 'Teatro Infantil', categoria: 'Infancias', icon: 'fa-masks-theater', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue', horarios: [ { dia: 'Sábado', hora: '10:45 hs' }, { dia: 'Sábado', hora: '12:15 hs' } ] },
+            { nombre: 'Arte Infantil', categoria: 'Infancias', icon: 'fa-palette', color: 'text-ulap-purple', border: 'border-ulap-purple', bg: 'bg-ulap-purple', horarios: [ { dia: 'Sábado', hora: '14:30 hs' } ] },
 
             // --- OTROS ---
-            { 
-                nombre: 'Experiencia Mayor', categoria: 'Otros', icon: 'fa-users', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue',
-                horarios: [ { dia: 'Miércoles', hora: '16:00 hs' } ]
-            }
+            { nombre: 'Experiencia Mayor', categoria: 'Otros', icon: 'fa-users', color: 'text-ulap-blue', border: 'border-ulap-blue', bg: 'bg-ulap-blue', horarios: [ { dia: 'Miércoles', hora: '16:00 hs' } ] }
         ];
 
+        // Función que renderiza la vista de CALENDARIO agrupado por días
         function renderizarTalleres(talleres) {
             const contenedor = document.getElementById('contenedor-talleres');
             contenedor.innerHTML = '';
+            
+            // Reasignar clases del contenedor para que sea un grid de 6 columnas en compu
+            contenedor.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5 sm:gap-6";
+
+            const diasOrden = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const talleresPorDia = { 'Lunes': [], 'Martes': [], 'Miércoles': [], 'Jueves': [], 'Viernes': [], 'Sábado': [] };
+
+            // Clasificamos cada taller en su respectivo día
             talleres.forEach(taller => {
-                let horariosHTML = taller.horarios.map(h => `<div class="flex items-center gap-2 bg-gray-50 border border-gray-100 rounded-lg p-2 text-sm"><i class="far fa-calendar-alt text-gray-400"></i><span class="font-bold text-gray-700">${h.dia}</span><span class="text-gray-500">| ${h.hora}</span></div>`).join('');
-                const msj = `¡Hola ULAP! Quería info en el taller de *${taller.nombre}*.`;
-                contenedor.innerHTML += `
-                    <div class="bg-white rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col group">
-                        <div class="${taller.bg} p-6 text-white relative overflow-hidden rounded-t-3xl">
-                            <i class="fas ${taller.icon} absolute -right-6 -bottom-6 text-9xl opacity-20 transform group-hover:scale-110 transition-transform duration-500"></i>
-                            <div class="relative z-10"><span class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase backdrop-blur-sm mb-3 inline-block">${taller.categoria}</span><h3 class="font-display font-black text-2xl leading-tight">${taller.nombre}</h3></div>
+                taller.horarios.forEach(h => {
+                    if (talleresPorDia[h.dia]) {
+                        // Guardamos una copia del taller sumando la hora específica
+                        talleresPorDia[h.dia].push({ ...taller, hora: h.hora });
+                    }
+                });
+            });
+
+            // Ordenamos los talleres dentro de cada día según la hora
+            diasOrden.forEach(dia => {
+                talleresPorDia[dia].sort((a, b) => a.hora.localeCompare(b.hora));
+            });
+
+            // Renderizamos las columnas
+            diasOrden.forEach(dia => {
+                let htmlColumna = `
+                    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 flex flex-col overflow-hidden h-full">
+                        <div class="bg-ulap-purple/5 text-center py-4 border-b border-ulap-purple/10">
+                            <h3 class="font-display font-black text-ulap-purple text-lg uppercase tracking-wider">${dia}</h3>
                         </div>
-                        <div class="p-6 flex-grow flex flex-col bg-white rounded-b-3xl">
-                            <div class="flex flex-col gap-2 mb-6">${horariosHTML}</div>
-                            <div class="mt-auto"><a href="https://api.whatsapp.com/send?phone=${numeroWhatsapp}&text=${encodeURIComponent(msj)}" target="_blank" class="w-full flex justify-center items-center gap-2 border-2 ${taller.border} ${taller.color} hover:bg-gray-50 font-bold py-3 px-4 rounded-xl"><i class="fab fa-whatsapp text-xl"></i> Solicitar Info</a></div>
-                        </div>
-                    </div>`;
+                        <div class="p-3 flex-grow flex flex-col gap-3">
+                `;
+
+                if (talleresPorDia[dia].length === 0) {
+                    htmlColumna += `<div class="text-center text-gray-400 text-sm py-6 italic flex-grow flex items-center justify-center">Sin actividades</div>`;
+                } else {
+                    talleresPorDia[dia].forEach(taller => {
+                        const msj = `¡Hola ULAP! Quería info sobre el taller de *${taller.nombre}* de los ${dia} a las ${taller.hora}.`;
+                        
+                        htmlColumna += `
+                            <div tabindex="0" class="group relative bg-white border-l-4 ${taller.border} rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer focus:outline-none ring-0">
+                                <!-- Vista Normal Compacta -->
+                                <div class="p-3 flex items-center gap-3 relative z-10 group-hover:opacity-0 transition-opacity duration-300">
+                                    <div class="${taller.bg} text-white w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 shadow-inner">
+                                        <i class="fas ${taller.icon}"></i>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="text-[11px] font-bold text-gray-500 mb-0.5">${taller.hora}</div>
+                                        <div class="font-display font-bold text-sm leading-tight text-ulap-dark">${taller.nombre}</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Overlay Expandido Hover/Click (Info + Botón) -->
+                                <div class="absolute inset-0 bg-white/95 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 group-focus:opacity-100 focus-within:opacity-100 transition-opacity duration-300 z-20 flex flex-col items-center justify-center p-3 text-center pointer-events-none group-hover:pointer-events-auto group-focus:pointer-events-auto focus-within:pointer-events-auto">
+                                    <span class="text-[10px] font-black ${taller.color} uppercase tracking-widest mb-1.5">${taller.categoria}</span>
+                                    <a href="https://api.whatsapp.com/send?phone=${numeroWhatsapp}&text=${encodeURIComponent(msj)}" target="_blank" class="w-full bg-gradient-to-r from-ulap-orange to-ulap-yellow text-white text-[11px] font-bold py-2 rounded-lg hover:shadow-lg hover:scale-[1.02] transition-all flex items-center justify-center gap-1.5">
+                                        <i class="fab fa-whatsapp text-sm"></i> Solicitar
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                htmlColumna += `</div></div>`;
+                contenedor.innerHTML += htmlColumna;
             });
         }
 
         // ==========================================
-        // BASE DE DATOS: EVENTOS (NOCHE) - LISTA COMPLETA
+        // BASE DE DATOS: EVENTOS (NOCHE)
         // ==========================================
         const eventosNoche = [
             {
-                titulo: "POESÍA BAJO LAS ESTRELLAS", // NUEVO EVENTO
+                titulo: "POESÍA BAJO LAS ESTRELLAS",
                 subtitulo: "Encuentro de Lectura y Escritura",
                 desc: "El dolce far niente o los paseos imposibles. Un espacio calmo para compartir textos propios o ajenos en nuestro patio bajo la noche de Villa Crespo.",
                 icon: "fa-feather-pointed",
-                gradiente: "from-[#0f172a] to-[#1e3a8a]", // Azul noche profundo estilo "starry night"
+                gradiente: "from-[#0f172a] to-[#1e3a8a]",
                 borde: "border-slate-400"
             },
             {
@@ -605,19 +612,14 @@
             eventosNoche.forEach(ev => {
                 contenedor.innerHTML += `
                     <div class="relative bg-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700 group hover:-translate-y-2 transition-transform duration-300">
-                        <!-- Fondo Degrade Estilo Poster -->
                         <div class="absolute inset-0 bg-gradient-to-br ${ev.gradiente} opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                        
                         <div class="relative p-8 h-full flex flex-col">
                             <div class="w-16 h-16 rounded-2xl bg-black/30 backdrop-blur-md flex items-center justify-center mb-6 border-b-2 ${ev.borde}">
                                 <i class="fas ${ev.icon} text-3xl text-white drop-shadow-md"></i>
                             </div>
-                            
                             <h3 class="font-display font-black text-2xl text-white mb-1 uppercase tracking-tight">${ev.titulo}</h3>
                             <h4 class="text-sm font-bold text-${ev.borde.replace('border-','')} mb-4 tracking-wider">${ev.subtitulo}</h4>
-                            
                             <p class="text-slate-300 font-light mb-8 flex-grow">${ev.desc}</p>
-                            
                             <div class="mt-auto pt-4 border-t border-white/10">
                                 <span class="text-xs text-slate-400 font-mono"><i class="fas fa-info-circle mr-1"></i> Fechas rotativas en IG</span>
                             </div>
